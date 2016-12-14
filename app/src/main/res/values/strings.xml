@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">SuperCoder</string>
+    <string name="shouye">首页</string>
+    <string name="shipin">视频</string>
+    <string name="guanzhu">关注</string>
+    <string name="wo">我</string>
+    <string name="zixun">资讯</string>
+    <string name="keji">科技</string>
+    <string name="chuangye">创业</string>
+    <string name="yundong">运动</string>
+</resources>
