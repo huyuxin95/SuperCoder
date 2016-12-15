@@ -15,8 +15,10 @@ import android.widget.LinearLayout;
 
 import com.jju.yuxin.supercoder.R;
 import com.jju.yuxin.supercoder.adapter.FragmentViewPagerAdapter;
-import com.jju.yuxin.supercoder.fragment.OneFragment;
-import com.jju.yuxin.supercoder.fragment.TwoFragment;
+import com.jju.yuxin.supercoder.fragment.ChuangyeFragment;
+import com.jju.yuxin.supercoder.fragment.KejiFragment;
+import com.jju.yuxin.supercoder.fragment.YundongFragment;
+import com.jju.yuxin.supercoder.fragment.ZixunFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,16 +75,16 @@ public class HomeActivity extends AppCompatActivity {
         InitImageView();
 
         //加入四个fragment
-        OneFragment tab1Fragment = OneFragment.newInstance(); //首页
-        TwoFragment tab2Fragment = TwoFragment.newInstance(); //视频
-        OneFragment tab3Fragment = OneFragment.newInstance(); //关注
-        OneFragment tab4Fragment = OneFragment.newInstance(); //我
+        ZixunFragment zxFragment = ZixunFragment.newInstance(); //首页
+        KejiFragment kjFragment = KejiFragment.newInstance(); //视频
+        ChuangyeFragment cyFragment = ChuangyeFragment.newInstance(); //创业
+        YundongFragment ydFragment = YundongFragment.newInstance(); //我
         //用fragment集合来管理
         fragments = new ArrayList<>();
-        fragments.add(tab1Fragment);
-        fragments.add(tab2Fragment);
-        fragments.add(tab3Fragment);
-        fragments.add(tab4Fragment);
+        fragments.add(zxFragment);
+        fragments.add(kjFragment);
+        fragments.add(cyFragment);
+        fragments.add(ydFragment);
 
         //获取fragment和viewpager关联的适配器
         FragmentViewPagerAdapter adapter = new FragmentViewPagerAdapter(getSupportFragmentManager(), view_pager, fragments);

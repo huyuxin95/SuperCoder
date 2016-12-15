@@ -23,21 +23,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 /**
- *=============================================================================
- *
+ * =============================================================================
+ * <p>
  * Copyright (c) 2016  yuxin rights reserved.
- * ClassName TwoFragment
+ * ClassName KejiFragment
  * Created by yuxin.
  * Created time 13-12-2016 09:22.
- * Describe :含有第三层Viewpager的Fragment
+ * Describe :含有第三层Viewpager的---科技Fragment
  * History:
  * Version   1.0.
- *
- *==============================================================================
+ * <p>
+ * ==============================================================================
  */
-public class TwoFragment extends Fragment {
+public class KejiFragment extends Fragment {
 
     private ImageView iv_top;
     private ViewPager view_pager;
@@ -47,18 +46,20 @@ public class TwoFragment extends Fragment {
 
     /**
      * 获取当前类的对象
+     *
      * @return
      */
-    public static TwoFragment newInstance(){
-        TwoFragment fragment = new TwoFragment();
+    public static KejiFragment newInstance() {
+        KejiFragment fragment = new KejiFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("fragment",TwoFragment.class.getSimpleName());
+        bundle.putString("fragment", KejiFragment.class.getSimpleName());
         return fragment;
     }
 
 
     /**
      * 设置当前fragment的布局
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -67,12 +68,13 @@ public class TwoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_two,container,false);
+        View view = inflater.inflate(R.layout.fragment_two, container, false);
         return view;
     }
 
     /**
      * 控件及数据的初始化
+     *
      * @param savedInstanceState
      */
     @Override
@@ -107,7 +109,7 @@ public class TwoFragment extends Fragment {
     /**
      * 数据初始化
      */
-    public void init(){
+    public void init() {
         //添加二级子标题
         titles.add("Android");
         titles.add("IOS");
@@ -120,10 +122,17 @@ public class TwoFragment extends Fragment {
 
         //用集合管理可滚动的Fragment.用于填充三级Viewpager
         final ArrayList<ScrollAbleFragment> fragmentList = new ArrayList<>();
-        for (int i = 0; i < titles.size(); i++) {
-            //循环的添加第三层fragment,实际上应该是不一样的Fragment
-            fragmentList.add(TwoCateFragment.newInstance());
-        }
+
+        //循环的添加第三层fragment
+        fragmentList.add(CateAndroidFragment.newInstance());//andropid
+        fragmentList.add(CateIOSFragment.newInstance()); //IOS
+        fragmentList.add(CateWinFragment.newInstance());  //WIN
+        fragmentList.add(CateShoujiFragment.newInstance());//手机
+        fragmentList.add(CatePadFragment.newInstance()); //平板
+        fragmentList.add(CatePCFragment.newInstance()); //电脑
+        fragmentList.add(CateGameFragment.newInstance()); // 游戏
+        fragmentList.add(CateVRFragment.newInstance());  //VR
+
 
         //获取第三层ViewPager的标题的适配器
         final MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getChildFragmentManager(), fragmentList);
@@ -161,7 +170,6 @@ public class TwoFragment extends Fragment {
 
     /**
      * 第三层tablayout的适配器
-     *
      */
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
@@ -192,6 +200,7 @@ public class TwoFragment extends Fragment {
 
     /**
      * 获取到屏幕的宽度.返回值单位是像素
+     *
      * @param paramInt
      * @return
      */
@@ -215,12 +224,13 @@ public class TwoFragment extends Fragment {
 
     /**
      * dp转换为像素
+     *
      * @param context
      * @param dipValue
      * @return
      */
-    public int dip2px(Context context,int dipValue) {
-        if(context != null){
+    public int dip2px(Context context, int dipValue) {
+        if (context != null) {
             float reSize = context.getResources().getDisplayMetrics().density;
             return (int) ((dipValue * reSize) + 0.5);
         }

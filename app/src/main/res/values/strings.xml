@@ -8,4 +8,5 @@
     <string name="keji">科技</string>
     <string name="chuangye">创业</string>
     <string name="yundong">运动</string>
+    <string name="transition_news_img">transition_news_img</string>
 </resources>

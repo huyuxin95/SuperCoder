@@ -77,7 +77,7 @@ public class TwoAdapter extends RecyclerView.Adapter<TwoAdapter.ViewHolder> {
         ImageView holder_img;
         public ViewHolder(View view) {
             super(view);
-            holder_img = (ImageView) view.findViewById(R.id.item_home_img);
+            holder_img = (ImageView) view.findViewById(R.id.im_two_img);
         }
     }
 }
