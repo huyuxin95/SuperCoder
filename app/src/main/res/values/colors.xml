@@ -22,6 +22,7 @@
     <color name="rg_text_color">#925656</color>
     <color name="c_dddddd">#dddddd</color>
     <color name="c_fefefe">#fefefe</color>
+    <color name="black">#000000</color>
 
 
 </resources>

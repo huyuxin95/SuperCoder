@@ -1,7 +1,5 @@
 package com.jju.yuxin.supercoder.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +16,6 @@ import android.widget.ProgressBar;
 import com.jju.yuxin.supercoder.R;
 import com.jju.yuxin.supercoder.bean.NewslistBean;
 
-import org.sufficientlysecure.htmltextview.HtmlTextView;
 import org.xutils.x;
 
 /**
@@ -95,6 +92,8 @@ public class NewsDetilActivity extends AppCompatActivity {
         //支持js
         WebSettings settings = htNewsContent.getSettings();
         settings.setJavaScriptEnabled(true);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        settings.setUseWideViewPort(true);
     }
 
     public void hideprogress() {

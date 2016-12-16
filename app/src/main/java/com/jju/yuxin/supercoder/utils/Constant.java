@@ -1,5 +1,9 @@
 package com.jju.yuxin.supercoder.utils;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * =============================================================================
  * Copyright (c) 2016 yuxin All rights reserved.
@@ -11,7 +15,6 @@ package com.jju.yuxin.supercoder.utils;
  * History:
  * ==============================================================================
  */
-
 public class Constant {
     public static final String URL="http://api.tianapi.com/";
     public static final String Chuangye="startup";
@@ -26,7 +29,6 @@ public class Constant {
     public static final int ERROR=3;
     public static final int SUCCESS=4;
     public static final int LOADMORE=5;
+    public static final int SUCCESS_LOAD_DETAIL=6;
     public static final int DEFAULT_COUNT=10;
-
-
 }

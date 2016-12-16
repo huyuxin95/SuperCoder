@@ -1,5 +1,6 @@
 package com.jju.yuxin.supercoder.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jju.yuxin.supercoder.R;
+import com.jju.yuxin.supercoder.activity.NewsDetilActivity;
 import com.jju.yuxin.supercoder.adapter.CatePCAdapter;
 import com.jju.yuxin.supercoder.adapter.TwoAdapter;
 import com.jju.yuxin.supercoder.bean.NewslistBean;
@@ -104,6 +106,10 @@ public class CatePCFragment extends ScrollAbleFragment {
             @Override
             public void onItemClick(NewslistBean news, int position) {
                 e(TAG, "onItemClick" + "news:"+news.toString()+"position"+position);
+
+                Intent intent = new Intent(getActivity(), NewsDetilActivity.class);
+                intent.putExtra("news", news);
+                startActivity(intent);
 
             }
         });
