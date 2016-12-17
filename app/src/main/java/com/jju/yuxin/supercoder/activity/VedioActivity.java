@@ -98,6 +98,9 @@ public class VedioActivity extends Activity {
                 e(TAG, "onItemClick" + "news:" + news.toString() + "position" + position);
 
                 Log.e(TAG, "onItemClick" + "position:" + position);
+                Intent intent = new Intent(VedioActivity.this, VedioNewsDetailsActivity.class);
+                intent.putExtra("vedio_news", vedioinfos.get(position));
+                startActivity(intent);
             }
         });
 
@@ -121,8 +124,5 @@ public class VedioActivity extends Activity {
                 lv_vedio_news.setloadMoreComplete();
             }
         });
-
     }
-
-
 }

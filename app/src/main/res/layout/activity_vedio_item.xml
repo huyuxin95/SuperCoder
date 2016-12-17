@@ -9,6 +9,7 @@
     app:cardBackgroundColor="@color/cardview_light_background"
     app:cardCornerRadius="0dp"
     app:cardElevation="8dp"
+
     app:cardUseCompatPadding="true">
 
     <LinearLayout

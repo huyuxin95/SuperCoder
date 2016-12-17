@@ -9,4 +9,9 @@
     <string name="chuangye">创业</string>
     <string name="yundong">运动</string>
     <string name="transition_news_img">transition_news_img</string>
+    <string name="more_vedio">更多视频</string>
+    <string name="share">分享</string>
+    <string name="shujujiazaizhong">数据加载中..</string>
+    <string name="bofangwancheng">播放完成</string>
+    <string name="haoxiangchuxianleyidianwenti">好像出现了一点问题,待会再试吧.</string>
 </resources>

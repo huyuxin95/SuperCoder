@@ -23,6 +23,7 @@
     <color name="c_dddddd">#dddddd</color>
     <color name="c_fefefe">#fefefe</color>
     <color name="black">#000000</color>
+    <color name="lighter_gray">#bbb</color>
 
 
 </resources>

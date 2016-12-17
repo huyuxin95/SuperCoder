@@ -18,10 +18,7 @@ import com.jju.yuxin.supercoder.bean.NewslistBean;
 
 import org.xutils.x;
 
-/**
- * 详情页
- * Created by qyh on 2016/3/9.
- */
+
 public class NewsDetilActivity extends AppCompatActivity {
 
     private ImageView ivImage;

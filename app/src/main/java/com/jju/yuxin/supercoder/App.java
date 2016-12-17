@@ -4,6 +4,8 @@ import android.app.Application;
 
 import org.xutils.x;
 
+import cn.sharesdk.framework.ShareSDK;
+
 
 public class App extends Application {
 
@@ -14,6 +16,8 @@ public class App extends Application {
 		//初始化XUtils3,设置debug模式
 		x.Ext.init(this);
 		x.Ext.setDebug(false);
+
+		ShareSDK.initSDK(this);
 	}
 
 }
