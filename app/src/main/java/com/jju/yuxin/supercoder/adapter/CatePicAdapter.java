@@ -8,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jju.yuxin.supercoder.R;
 import com.jju.yuxin.supercoder.bean.NewslistBean;
-import com.jju.yuxin.supercoder.http.AsyncTaskUtils;
+import com.jju.yuxin.supercoder.bean.ResponseBean;
 import com.jju.yuxin.supercoder.utils.Constant;
 
 import net.youmi.android.normal.banner.BannerManager;
@@ -34,16 +35,16 @@ import static android.util.Log.i;
  * ClassName TwoAdapter
  * Created by yuxin.
  * Created time 13-12-2016 15:13.
- * Describe : android fragment 适配器
+ * Describe :
  * History:
  * Version   1.0.
  *
  *==============================================================================
  */
-public class CateAndroidAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CatePicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final String TAG = CateAndroidAdapter.class.getSimpleName();
-
+    private static final String TAG = CatePicAdapter.class.getSimpleName();
+    //上下文
     private Context context;
 
     private List<Integer> adlist = new ArrayList<>();
@@ -57,14 +58,14 @@ public class CateAndroidAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
     //里面的数据
-    private List<NewslistBean> newslistBeen = new ArrayList<>();
+    private List<ResponseBean> piclistBeen = new ArrayList<>();
 
     /**
      * 构造函数
      *
      * @param context
      */
-    public CateAndroidAdapter(Context context) {
+    public CatePicAdapter(Context context) {
         this.context = context;
     }
 
@@ -74,10 +75,10 @@ public class CateAndroidAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      *
      * @param list
      */
-    public void onReference(List<NewslistBean> list, List<Integer> adlist) {
+    public void onReference(List<ResponseBean> list, List<Integer> adlist) {
         if (list != null) {
-            newslistBeen.clear();
-            newslistBeen.addAll(list);
+            piclistBeen.clear();
+            piclistBeen.addAll(list);
             this.adlist.clear();
             this.adlist.addAll(adlist);
 
@@ -86,8 +87,7 @@ public class CateAndroidAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             for (int adposition:adlist) {
 
                 i(TAG, "HM"+"onReference" + adposition);
-
-                newslistBeen.add(adposition,new NewslistBean());
+                piclistBeen.add(adposition,new ResponseBean());
             }
 
             notifyDataSetChanged();
@@ -99,9 +99,9 @@ public class CateAndroidAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      *
      * @param list
      */
-    public void addOnReference(List<NewslistBean> list, List<Integer> adlist) {
+    public void addOnReference(List<ResponseBean> list, List<Integer> adlist) {
         if (list != null) {
-            newslistBeen.addAll(list);
+            piclistBeen.addAll(list);
 
             this.adlist.addAll(adlist);
 
@@ -110,10 +110,10 @@ public class CateAndroidAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             for (int adposition:adlist) {
                 i(TAG, "HM"+"addOnReference" + "adposition"+adposition);
 
-                newslistBeen.add(adposition,new NewslistBean());
+                piclistBeen.add(adposition,new ResponseBean());
             }
 
-            i(TAG, "onReference" + "new"+newslistBeen.toString());
+            i(TAG, "onReference" + "new"+piclistBeen.toString());
             notifyDataSetChanged();
         }
     }
@@ -137,20 +137,20 @@ public class CateAndroidAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemCount() {
         //新闻条目加广告条目
-        return newslistBeen.size();
+        return piclistBeen.size();
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         //加载Item View的时候根据不同TYPE加载不同的布局
         if (viewType == ITEM_TYPE.NEW.ordinal()) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_adapter_item_two, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_adapter_item_pic, parent, false);
             ViewHolder viewHolder = new ViewHolder(view);
 
             return viewHolder;
         } else {
+
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_fragment_adapter_ad, parent, false);
             ADViewHolder adviewHolder = new ADViewHolder(view);
             return adviewHolder;
@@ -158,30 +158,28 @@ public class CateAndroidAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
     }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        i(TAG, "onBindViewHolder" + "position:" + position);
         if (holder instanceof ViewHolder) {
-            i(TAG, "onBindViewHolder" + "ViewHolder:" + position);
-            if (Constant.FAILED_LOADING.equals(newslistBeen.get(position).getPicUrl())) {
-                ((ViewHolder) holder).iv_adapter.setBackgroundResource(R.mipmap.failed_loading);
-            } else {
-                x.image().bind(((ViewHolder) holder).iv_adapter, newslistBeen.get(position).getPicUrl());
-            }
-            ((ViewHolder) holder).tv_title.setText(newslistBeen.get(position).getTitle());
-            ((ViewHolder) holder).tv_time.setText(newslistBeen.get(position).getCtime());
-            if (mOnItemClickLitener != null) {
-                ((ViewHolder) holder).ry_cardview.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mOnItemClickLitener.onItemClick(newslistBeen.get(position), position);
-                    }
-                });
-            }
 
-        } else if (holder instanceof ADViewHolder) {
+                if (piclistBeen==null||piclistBeen.get(position).getImage()==null
+                        ||piclistBeen.get(position).getImage().getThumb()==null
+                        ||piclistBeen.get(position).getImage().getThumb().getUrl()==null){
+                    ((ViewHolder) holder).iv_pic.setBackgroundResource(R.mipmap.failed_loading);
+                }else{
+                    x.image().bind(((ViewHolder) holder).iv_pic, piclistBeen.get(position).getImage().getThumb().getUrl());
+                }
+
+                if (mOnItemClickLitener != null) {
+                    ((ViewHolder) holder).ry_cardview_pic.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mOnItemClickLitener.onItemClick(piclistBeen.get(position), position);
+                        }
+                    });
+            }
+        }else if(holder instanceof ADViewHolder){
             // 获取广告条
             View bannerView = BannerManager.getInstance(context)
                     .getBannerView(new BannerViewListener() {
@@ -203,30 +201,25 @@ public class CateAndroidAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             // 将广告条加入到布局中
             ((ADViewHolder) holder).bannerLayout.addView(bannerView);
-
         }
-
 
     }
 
 
-    /**
-     * 视图缓存
-     */
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout ry_cardview;
-        ImageView iv_adapter;
-        TextView tv_title;
-        TextView tv_time;
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        RelativeLayout ry_cardview_pic;
+        ImageView iv_pic;
+
 
         public ViewHolder(View view) {
             super(view);
-            ry_cardview = (LinearLayout) view.findViewById(R.id.ry_cardview);
-            iv_adapter = (ImageView) view.findViewById(R.id.im_two_img);
-            tv_title = (TextView) view.findViewById(R.id.tv_title);
-            tv_time = (TextView) view.findViewById(R.id.tv_time);
+            ry_cardview_pic=(RelativeLayout) view.findViewById(R.id.ry_cardview_pic);
+            iv_pic = (ImageView) view.findViewById(R.id.im_pic_pre);
         }
     }
+
 
     /**
      * 视图缓存
@@ -245,7 +238,7 @@ public class CateAndroidAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private OnItemClickLitener mOnItemClickLitener;
 
     public interface OnItemClickLitener {
-        void onItemClick(NewslistBean news, int position);
+        void onItemClick(ResponseBean news, int position);
     }
 
     public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {

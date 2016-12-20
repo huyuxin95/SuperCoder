@@ -1,4 +1,4 @@
-package com.jju.yuxin.supercoder.http;
+package com.jju.yuxin.supercoder.utils;
 
 import com.jju.yuxin.supercoder.utils.Constant;
 

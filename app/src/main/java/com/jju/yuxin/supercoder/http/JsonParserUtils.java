@@ -5,6 +5,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jju.yuxin.supercoder.bean.NewslistBean;
+import com.jju.yuxin.supercoder.bean.PicInfoBean;
+import com.jju.yuxin.supercoder.bean.ResponseBean;
 import com.jju.yuxin.supercoder.bean.ResultBean;
 
 import java.lang.reflect.Type;
@@ -26,6 +28,7 @@ import java.util.List;
 public class JsonParserUtils {
     private static final String TAG = JsonParserUtils.class.getSimpleName();
     private static List<NewslistBean> lists;
+    private static List<ResponseBean> pic_list;
 
 
     public static List<NewslistBean> parserResulet(String result) {
@@ -48,5 +51,28 @@ public class JsonParserUtils {
             return null;
         }
     }
+
+    public static List<ResponseBean> parserPicResponse(String result) {
+        pic_list = new ArrayList<>();
+        PicInfoBean pic_Bean = new PicInfoBean();
+        try {
+
+            Type type = new TypeToken<PicInfoBean>() {
+            }.getType();
+
+            pic_Bean = new Gson().fromJson(result, type);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (pic_Bean.getResponse() != null) {
+            return pic_Bean.getResponse();
+        } else {
+            Log.e(TAG, "parserResulet" + "resultBean:getCount" + pic_Bean.getCount());
+            return null;
+        }
+    }
+
 
 }

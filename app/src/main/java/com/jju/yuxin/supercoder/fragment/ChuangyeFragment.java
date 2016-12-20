@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,9 @@ import android.view.ViewGroup;
 import com.jju.yuxin.supercoder.R;
 import com.jju.yuxin.supercoder.activity.NewsDetilActivity;
 import com.jju.yuxin.supercoder.adapter.ChuangyeAdapter;
-import com.jju.yuxin.supercoder.adapter.OneAdapter;
 import com.jju.yuxin.supercoder.bean.NewslistBean;
-import com.jju.yuxin.supercoder.http.GetParams;
-import com.jju.yuxin.supercoder.http.HttpUtil;
+import com.jju.yuxin.supercoder.utils.GetParams;
+import com.jju.yuxin.supercoder.http.HttpNewsUtil;
 import com.jju.yuxin.supercoder.utils.Constant;
 import com.jju.yuxin.supercoder.view.YRecycleview;
 
@@ -47,6 +45,7 @@ public class ChuangyeFragment extends Fragment {
     private static final String TAG =ChuangyeFragment.class.getSimpleName();
     private YRecycleview recyclerview;
     private ChuangyeAdapter cyAdapter;
+    private Constant constant=new Constant();
 
     private Handler mhandler = new Handler() {
         @Override
@@ -56,14 +55,29 @@ public class ChuangyeFragment extends Fragment {
             switch (msg.what) {
                 case Constant.FINISHED:
                     List<NewslistBean> newslistBeen = (List<NewslistBean>) msg.obj;
-                    e(TAG, "handleMessage:" + "NewslistBean"+newslistBeen);
-                    cyAdapter.onReference(newslistBeen);
+
+                    i(TAG, "HM" + "constant.getAdlist():"+constant.getOneAdlist());
+
+                    //constant.getAdlist()初始的广告位置
+                    cyAdapter.onReference(newslistBeen,constant.getOneAdlist());
                     break;
                 case Constant.LOADMORE:
                     //数据加载更多
-                    List<NewslistBean> addlistBean= (List<NewslistBean>) msg.obj;
-                    e(TAG, "handleMessage:" + "NewslistBean"+addlistBean);
-                    cyAdapter.addOnReference(addlistBean);
+                    List<NewslistBean> addlistBean = (List<NewslistBean>) msg.obj;
+
+                    int page = msg.arg1;
+
+                    i(TAG, "HM" + "page:"+page);
+                    //初始化一个集合用来放置即将加入的广告位置
+                    List<Integer> adlists=new ArrayList<>();
+
+                    for (int adpisition:constant.getOneAdlist()) {
+                        //在原来的基础上增加
+                        adlists.add(((page-1)*Constant.DEFAULT_COUNT+adpisition));
+                        i(TAG, "HM"+"position" +((page-1)*Constant.DEFAULT_COUNT+adpisition));
+                    }
+
+                    cyAdapter.addOnReference(addlistBean,adlists);
                     break;
                 case Constant.ERROR:
                     break;
@@ -135,7 +149,7 @@ public class ChuangyeFragment extends Fragment {
         //获取默认参数设置
         GetParams params_map = new GetParams();
         //获取网络数据
-        HttpUtil.doGet(mhandler, Constant.URL, Constant.Chuangye, params_map.getParams_map());
+        HttpNewsUtil.doGet(mhandler, Constant.URL, Constant.Chuangye, params_map.getParams_map());
 
 
         recyclerview.setRefreshAndLoadMoreListener(new YRecycleview.OnRefreshAndLoadMoreListener() {
@@ -147,7 +161,7 @@ public class ChuangyeFragment extends Fragment {
                 //获取默认参数设置
                 GetParams params_map = new GetParams();
                 //获取网络数据
-                HttpUtil.doGet(mhandler, Constant.URL, Constant.Chuangye, params_map.getParams_map());
+                HttpNewsUtil.doGet(mhandler, Constant.URL, Constant.Chuangye, params_map.getParams_map());
             }
 
             @Override
@@ -163,7 +177,7 @@ public class ChuangyeFragment extends Fragment {
                 GetParams params_map = new GetParams();
                 params_map.addToParams_map("page",page+"");
                 //获取网络数据
-                HttpUtil.doGet(mhandler, Constant.URL, Constant.Chuangye, params_map.getParams_map(),false);
+                HttpNewsUtil.doGet(mhandler, Constant.URL, Constant.Chuangye, params_map.getParams_map(),page);
             }
         });
 

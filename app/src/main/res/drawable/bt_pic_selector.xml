@@ -2,8 +2,8 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_checked="false"
-        android:drawable="@drawable/care_tabbar" />
+        android:drawable="@drawable/tabbar_icon_picture" />
     <item
         android:state_checked="true"
-        android:drawable="@drawable/care_tabbar_press" />
+        android:drawable="@drawable/tabbar_icon_picture_press" />
 </selector>

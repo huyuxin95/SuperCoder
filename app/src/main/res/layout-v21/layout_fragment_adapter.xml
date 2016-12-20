@@ -8,6 +8,7 @@
     android:orientation="vertical"
     app:cardBackgroundColor="@color/cardview_light_background"
     app:cardCornerRadius="4dp"
+    android:stateListAnimator="@animator/touch_raise"
     app:cardUseCompatPadding="true"
     app:cardElevation="2dp">
 

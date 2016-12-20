@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +13,12 @@ import android.view.ViewGroup;
 import com.jju.yuxin.supercoder.R;
 import com.jju.yuxin.supercoder.activity.NewsDetilActivity;
 import com.jju.yuxin.supercoder.adapter.CatePCAdapter;
-import com.jju.yuxin.supercoder.adapter.TwoAdapter;
 import com.jju.yuxin.supercoder.bean.NewslistBean;
-import com.jju.yuxin.supercoder.http.GetParams;
-import com.jju.yuxin.supercoder.http.HttpUtil;
+import com.jju.yuxin.supercoder.utils.GetParams;
+import com.jju.yuxin.supercoder.http.HttpNewsUtil;
 import com.jju.yuxin.supercoder.utils.Constant;
 import com.jju.yuxin.supercoder.view.YRecycleview;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.util.Log.e;
@@ -118,7 +115,7 @@ public class CatePCFragment extends ScrollAbleFragment {
         GetParams params_map = new GetParams();
         params_map.addToParams_map("word","电脑");
         //获取网络数据
-        HttpUtil.doGet(mhandler, Constant.URL, Constant.Keji, params_map.getParams_map());
+        HttpNewsUtil.doGet(mhandler, Constant.URL, Constant.Keji, params_map.getParams_map());
 
 
         recyclerview.setRefreshAndLoadMoreListener(new YRecycleview.OnRefreshAndLoadMoreListener() {
@@ -131,7 +128,7 @@ public class CatePCFragment extends ScrollAbleFragment {
                 GetParams params_map = new GetParams();
                 params_map.addToParams_map("word","电脑");
                 //获取网络数据
-                HttpUtil.doGet(mhandler, Constant.URL, Constant.Keji, params_map.getParams_map());
+                HttpNewsUtil.doGet(mhandler, Constant.URL, Constant.Keji, params_map.getParams_map());
             }
 
             @Override
@@ -148,7 +145,7 @@ public class CatePCFragment extends ScrollAbleFragment {
                 params_map.addToParams_map("word","电脑");
                 params_map.addToParams_map("page",page+"");
                 //获取网络数据
-                HttpUtil.doGet(mhandler, Constant.URL, Constant.Keji, params_map.getParams_map(),false);
+                HttpNewsUtil.doGet(mhandler, Constant.URL, Constant.Keji, params_map.getParams_map(),page);
             }
         });
 

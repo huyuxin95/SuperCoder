@@ -47,4 +47,5 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Core-2.7.10.jar')
     compile files('libs/ShareSDK-Wechat-Favorite-2.7.10.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.7.10.jar')
+    compile files('libs/YoumiSdk_v6.3.0_2016-09-08.jar')
 }

@@ -10,19 +10,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
 import com.jju.yuxin.supercoder.R;
-import com.jju.yuxin.supercoder.adapter.CateAndroidAdapter;
 import com.jju.yuxin.supercoder.adapter.VedioAdapter;
-import com.jju.yuxin.supercoder.bean.NewslistBean;
 import com.jju.yuxin.supercoder.bean.VedioInfoBean;
-import com.jju.yuxin.supercoder.http.GetParams;
-import com.jju.yuxin.supercoder.http.HttpUtil;
 import com.jju.yuxin.supercoder.utils.Constant;
 import com.jju.yuxin.supercoder.utils.JsoupUtils;
 import com.jju.yuxin.supercoder.view.YRecycleview;
 
 import java.util.List;
-
-import javax.security.auth.login.LoginException;
 
 import static android.util.Log.e;
 import static android.util.Log.i;

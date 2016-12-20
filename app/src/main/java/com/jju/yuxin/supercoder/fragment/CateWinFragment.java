@@ -6,21 +6,17 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jju.yuxin.supercoder.R;
 import com.jju.yuxin.supercoder.activity.NewsDetilActivity;
-import com.jju.yuxin.supercoder.adapter.CateAndroidAdapter;
 import com.jju.yuxin.supercoder.adapter.CateWinAdapter;
-import com.jju.yuxin.supercoder.adapter.TwoAdapter;
 import com.jju.yuxin.supercoder.bean.NewslistBean;
-import com.jju.yuxin.supercoder.http.GetParams;
-import com.jju.yuxin.supercoder.http.HttpUtil;
+import com.jju.yuxin.supercoder.utils.GetParams;
+import com.jju.yuxin.supercoder.http.HttpNewsUtil;
 import com.jju.yuxin.supercoder.utils.Constant;
 import com.jju.yuxin.supercoder.view.YRecycleview;
 
@@ -45,9 +41,12 @@ import static android.util.Log.i;
  */
 public class CateWinFragment extends ScrollAbleFragment {
 
-    private static final String TAG =CateWinFragment.class.getSimpleName();
+    private static final String TAG = CateWinFragment.class.getSimpleName();
     private YRecycleview recyclerview;
     private CateWinAdapter winAdapter;
+
+    //初始化参数
+    private Constant constant=new Constant();
 
     private Handler mhandler = new Handler() {
         @Override
@@ -56,15 +55,31 @@ public class CateWinFragment extends ScrollAbleFragment {
             //给适配器设置内容
             switch (msg.what) {
                 case Constant.FINISHED:
+                    //数据刷新完成
                     List<NewslistBean> newslistBeen = (List<NewslistBean>) msg.obj;
-                    Log.e(TAG, "handleMessage:" + "NewslistBean"+newslistBeen);
-                    winAdapter.onReference(newslistBeen);
+
+                    i(TAG, "HM" + "constant.getAdlist():"+constant.getThridAdlist());
+
+                    //constant.getAdlist()初始的广告位置
+                    winAdapter.onReference(newslistBeen,constant.getThridAdlist());
                     break;
                 case Constant.LOADMORE:
                     //数据加载更多
-                    List<NewslistBean> addlistBean= (List<NewslistBean>) msg.obj;
-                    e(TAG, "handleMessage:" + "NewslistBean"+addlistBean);
-                    winAdapter.addOnReference(addlistBean);
+                    List<NewslistBean> addlistBean = (List<NewslistBean>) msg.obj;
+
+                    int page = msg.arg1;
+
+                    i(TAG, "HM" + "page:"+page);
+                    //初始化一个集合用来放置即将加入的广告位置
+                    List<Integer> adlists=new ArrayList<>();
+
+                    for (int adpisition:constant.getThridAdlist()) {
+                        //在原来的基础上增加
+                        adlists.add(((page-1)*(Constant.DEFAULT_COUNT*3)+adpisition));
+                        i(TAG, "HM"+"position" +((page-1)*Constant.DEFAULT_COUNT+adpisition));
+                    }
+
+                    winAdapter.addOnReference(addlistBean,adlists);
                     break;
                 case Constant.ERROR:
                     break;
@@ -126,7 +141,7 @@ public class CateWinFragment extends ScrollAbleFragment {
         params_map.addToParams_map("word","win10");
         params_map.addToParams_map("num","30");
         //获取网络数据
-        HttpUtil.doGet(mhandler, Constant.URL, Constant.Keji, params_map.getParams_map());
+        HttpNewsUtil.doGet(mhandler, Constant.URL, Constant.Keji, params_map.getParams_map());
 
         recyclerview.setRefreshAndLoadMoreListener(new YRecycleview.OnRefreshAndLoadMoreListener() {
             @Override
@@ -139,7 +154,7 @@ public class CateWinFragment extends ScrollAbleFragment {
                 params_map.addToParams_map("word","win10");
                 params_map.addToParams_map("num","30");
                 //获取网络数据
-                HttpUtil.doGet(mhandler, Constant.URL, Constant.Keji, params_map.getParams_map());
+                HttpNewsUtil.doGet(mhandler, Constant.URL, Constant.Keji, params_map.getParams_map());
             }
 
             @Override
@@ -157,7 +172,7 @@ public class CateWinFragment extends ScrollAbleFragment {
                 params_map.addToParams_map("num","30");
                 params_map.addToParams_map("page",page+"");
                 //获取网络数据
-                HttpUtil.doGet(mhandler, Constant.URL, Constant.Keji, params_map.getParams_map(),false);
+                HttpNewsUtil.doGet(mhandler, Constant.URL, Constant.Keji, params_map.getParams_map(),page);
             }
         });
 

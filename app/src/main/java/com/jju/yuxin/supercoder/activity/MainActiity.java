@@ -41,11 +41,11 @@ public class MainActiity extends Activity {
     private RadioGroup rg_bm_bar;
     private RadioButton rb_home;
     private RadioButton rb_video;
-    private RadioButton rb_care;
+    private RadioButton rb_pic;
     private RadioButton rb_mine;
     private static final int HomePager = 0;
     private static final int VedioPager = 1;
-    private static final int CarePager = 2;
+    private static final int PicPager = 2;
     private static final int MinePager = 3;
 
 
@@ -70,7 +70,7 @@ public class MainActiity extends Activity {
         //单选的实例化
         rb_home = (RadioButton) findViewById(R.id.rb_home);
         rb_video = (RadioButton) findViewById(R.id.rb_video);
-        rb_care = (RadioButton) findViewById(R.id.rb_care);
+        rb_pic = (RadioButton) findViewById(R.id.rb_pic);
         rb_mine = (RadioButton) findViewById(R.id.rb_mine);
 
         final ArrayList<View> list = new ArrayList<View>();
@@ -80,8 +80,8 @@ public class MainActiity extends Activity {
         list.add(getView("Home", intent));
         Intent intent2 = new Intent(context, VedioActivity.class);
         list.add(getView("Vedio", intent2));
-        Intent intent3 = new Intent(context, CareActivity.class);
-        list.add(getView("Care", intent3));
+        Intent intent3 = new Intent(context, PicActivity.class);
+        list.add(getView("Pic", intent3));
         Intent intent4 = new Intent(context, MineActivity.class);
         list.add(getView("Mine", intent4));
 
@@ -106,9 +106,9 @@ public class MainActiity extends Activity {
                         //视频
                         pager.setCurrentItem(VedioPager);
                         break;
-                    case R.id.rb_care:
-                        //关注
-                        pager.setCurrentItem(CarePager);
+                    case R.id.rb_pic:
+                        //图片
+                        pager.setCurrentItem(PicPager);
                         break;
                     case R.id.rb_mine:
                         //我的
@@ -198,8 +198,8 @@ public class MainActiity extends Activity {
                 case VedioPager:
                     rb_video.setChecked(true);
                     break;
-                case CarePager:
-                    rb_care.setChecked(true);
+                case PicPager:
+                    rb_pic.setChecked(true);
                     break;
                 case MinePager:
                     rb_mine.setChecked(true);

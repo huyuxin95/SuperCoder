@@ -2,6 +2,7 @@ package com.jju.yuxin.supercoder.http;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.jju.yuxin.supercoder.bean.NewslistBean;
 import com.jju.yuxin.supercoder.utils.Constant;
@@ -11,7 +12,6 @@ import org.xutils.ex.HttpException;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,10 +29,9 @@ import static android.util.Log.e;
  * ==============================================================================
  */
 
-public class HttpUtil{
+public class HttpNewsUtil {
 
-    private static final String TAG = HttpUtil.class.getSimpleName();
-    private static final String Url = "http://api.tianapi.com/";
+    private static final String TAG = HttpNewsUtil.class.getSimpleName();
 
     /**
      * Http网络请求,第一次加载或者刷新数据
@@ -113,6 +112,7 @@ public class HttpUtil{
                     // 成功获取数据
                     e(TAG, "onFinished" + "result:" + result);
                     List<NewslistBean> newslistBeen = JsonParserUtils.parserResulet(result);
+                    Log.e(TAG, "onFinished!!!s" + newslistBeen.toString());
                     Message msg=Message.obtain();
                     msg.what= Constant.FINISHED;
                     msg.obj=newslistBeen;
@@ -130,8 +130,8 @@ public class HttpUtil{
      * @param channel
      * @param paramsMap
      */
-    public static void doGet(final Handler mhandler, String url, String channel, Map<String, String> paramsMap,boolean isFirst) {
-        isFirst=false;
+    public static void doGet(final Handler mhandler, String url, String channel, Map<String, String> paramsMap, final int page) {
+
         RequestParams params = new RequestParams(url + channel + "/");
         //传入的参数遍历
         for (Map.Entry<String, String> params_entry : paramsMap.entrySet()) {
@@ -207,6 +207,7 @@ public class HttpUtil{
                     Message msg=Message.obtain();
                     msg.what= Constant.LOADMORE;
                     msg.obj=newslistBeen;
+                    msg.arg1=page;
                     mhandler.sendMessage(msg);
                 }
             }

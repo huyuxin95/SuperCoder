@@ -25,7 +25,7 @@ import java.util.List;
 
 
 
-import static android.util.Log.e;
+import static android.util.Log.i;
 
 /**
  *=============================================================================
@@ -95,17 +95,17 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onExtraPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                e(TAG, "onExtraPageScrolled" + "...position--------: " + position+"positionOffset:"+positionOffset+"-------------positionOffsetPixels"+positionOffsetPixels);
+                i(TAG, "onExtraPageScrolled" + "...position--------: " + position+"positionOffset:"+positionOffset+"-------------positionOffsetPixels"+positionOffsetPixels);
             }
 
             @Override
             public void onExtraPageSelected(int position) {
-                e(TAG, "onExtraPageSelected" + "Extra...position: " + position);
+                i(TAG, "onExtraPageSelected" + "Extra...position: " + position);
             }
 
             @Override
             public void onExtraPageScrollStateChanged(int state) {
-                e(TAG, "onExtraPageScrollStateChanged" + "Extra...state: " + state);
+                i(TAG, "onExtraPageScrollStateChanged" + "Extra...state: " + state);
             }
         });
 

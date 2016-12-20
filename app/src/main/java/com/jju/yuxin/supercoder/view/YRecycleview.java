@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.util.Log.e;
+import static android.util.Log.i;
 
 /**
  * =============================================================================
@@ -265,14 +265,14 @@ public class YRecycleview extends RecyclerView {
         public int getItemViewType(int position) {
             //是否位是头部
             if (isRefreshHeader(position)) {
-                e(TAG, "isRefreshHeader" + "position:" + position);
+                i(TAG, "isRefreshHeader" + "position:" + position);
                 return TYPE_REFRESH_HEADER;
             }
 
 
             if (isHeader(position)) {
                 position = position - 1;
-                e(TAG, "isHeader" + "position:" + position);
+                i(TAG, "isHeader" + "position:" + position);
                 return sHeaderTypes.get(position);
             }
 
