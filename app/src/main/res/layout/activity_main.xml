@@ -37,10 +37,5 @@
             android:drawableTop="@drawable/bt_pic_selector"
             android:text="@string/bizhi"/>
 
-        <RadioButton
-            android:id="@+id/rb_mine"
-            style="@style/MMTabButton"
-            android:drawableTop="@drawable/bt_mine_selector"
-            android:text="@string/wo"/>
     </RadioGroup>
 </LinearLayout>

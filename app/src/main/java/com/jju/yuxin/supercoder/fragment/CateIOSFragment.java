@@ -23,14 +23,13 @@ import com.jju.yuxin.supercoder.view.YRecycleview;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.util.Log.e;
 import static android.util.Log.i;
 
 /**
  *=============================================================================
  *
  * Copyright (c) 2016  yuxin rights reserved.
- * ClassName TwoCateFragment
+ * ClassName CateIOSFragment
  * Created by yuxin.
  * Created time 13-12-2016 10:11.
  * Describe : 第三层Viewpager,填充的可滚动的Fragment
@@ -104,6 +103,14 @@ public class CateIOSFragment extends ScrollAbleFragment {
     }
 
 
+    /**
+     * 设置当前fragment的布局
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -115,9 +122,7 @@ public class CateIOSFragment extends ScrollAbleFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         recyclerview = (YRecycleview) this.getView().findViewById(R.id.yrecycle_view);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        //设置默认动画
+        //设置为Grid布局
         recyclerview.setItemAnimator(new DefaultItemAnimator());
 
         recyclerview.setLayoutManager(new GridLayoutManager(getActivity(),2));
@@ -130,7 +135,7 @@ public class CateIOSFragment extends ScrollAbleFragment {
         iosAdapter.setOnItemClickLitener(new CateIOSAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(NewslistBean news, int position) {
-                e(TAG, "onItemClick" + "news:"+news.toString()+"position:"+position);
+                i(TAG, "onItemClick" + "news:"+news.toString()+"position:"+position);
                 Intent intent = new Intent(getActivity(), NewsDetilActivity.class);
                 intent.putExtra("news", news);
                 startActivity(intent);
@@ -166,7 +171,7 @@ public class CateIOSFragment extends ScrollAbleFragment {
 
                 int page= (iosAdapter.getItemCount())/20+1;
 
-                e(TAG, "onLoadMore" + "page:"+page);
+                i(TAG, "onLoadMore" + "page:"+page);
                 //获取默认参数设置
                 GetParams params_map = new GetParams();
                 params_map.addToParams_map("word","ios");

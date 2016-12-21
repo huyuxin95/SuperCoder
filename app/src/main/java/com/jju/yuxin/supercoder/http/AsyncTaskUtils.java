@@ -15,7 +15,7 @@ import java.net.URL;
  * Created by yuxin.
  * Created time 2016/12/14 0014 下午 10:03.
  * Version   1.0;
- * Describe :
+ * Describe :  图片的异步加载 ,传入图片的URL和容器,加载完成后自动设置
  * History:
  * ==============================================================================
  */

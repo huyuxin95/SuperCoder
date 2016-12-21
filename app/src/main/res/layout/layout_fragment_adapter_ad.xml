@@ -11,6 +11,7 @@
     app:cardUseCompatPadding="true"
     app:cardElevation="4dp">
 
+    <!--广告控件-->
     <LinearLayout
         android:id="@+id/ll_banner"
         android:layout_width="fill_parent"

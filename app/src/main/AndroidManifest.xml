@@ -17,14 +17,16 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <!-- 以下为可选权限 -->
-    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
     <!-- 以下为可选的权限 -->
     <!-- 使用GPS获取用户精确定位信息 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <!-- 使用WIFI获取用户精确定位信息 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!--设置壁纸-->
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
 
     <application
         android:name=".App"
@@ -34,19 +36,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.MainActiity">
+
+        <activity
+            android:name=".activity.SplashActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".activity.MainActiity"></activity>
         <activity android:name=".activity.HomeActivity"></activity>
         <activity android:name=".activity.VedioActivity"></activity>
         <activity android:name=".activity.PicActivity"></activity>
-        <activity android:name=".activity.MineActivity"></activity>
         <activity android:name=".activity.NewsDetilActivity"></activity>
         <activity android:name=".activity.VedioNewsDetailsActivity"></activity>
-        <activity android:name=".activity.LandScapeVedio"></activity>
+        <activity
+            android:name=".activity.LandScapeVedio"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+        </activity>
 
 
         <!--MobUIShell-->
@@ -84,17 +94,17 @@
         <activity
             android:name="net.youmi.android.AdBrowser"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         <service
             android:name="net.youmi.android.AdService"
-            android:exported="false" >
+            android:exported="false">
         </service>
         <receiver
-            android:name="net.youmi.android.AdReceiver" >
+            android:name="net.youmi.android.AdReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <data android:scheme="package" />
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <data android:scheme="package"/>
             </intent-filter>
         </receiver>
 

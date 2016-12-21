@@ -9,7 +9,7 @@ import java.util.List;
  * Created by yuxin.
  * Created time 2016/12/19 0019 下午 9:06.
  * Version   1.0;
- * Describe :
+ * Describe :  图片请求bean
  * History:
  * ==============================================================================
  */

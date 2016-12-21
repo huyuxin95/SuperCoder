@@ -29,7 +29,7 @@ import static android.util.Log.i;
  *=============================================================================
  *
  * Copyright (c) 2016  yuxin rights reserved.
- * ClassName TwoCateFragment
+ * ClassName CateShoujiFragment
  * Created by yuxin.
  * Created time 13-12-2016 10:11.
  * Describe : 第三层Viewpager,填充的可滚动的Fragment
@@ -52,6 +52,7 @@ public class CateShoujiFragment extends ScrollAbleFragment {
             //给适配器设置内容
             switch (msg.what) {
                 case Constant.FINISHED:
+                    //数据请求完成
                     List<NewslistBean> newslistBeen = (List<NewslistBean>) msg.obj;
                     e(TAG, "handleMessage:" + "NewslistBean"+newslistBeen);
                     shoujiAdapter.onReference(newslistBeen);
@@ -83,6 +84,14 @@ public class CateShoujiFragment extends ScrollAbleFragment {
     }
 
 
+    /**
+     * 设置当前fragment的布局
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -94,6 +103,8 @@ public class CateShoujiFragment extends ScrollAbleFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         recyclerview = (YRecycleview) this.getView().findViewById(R.id.yrecycle_view);
+
+        //设置当前Recycle的样式为线性垂直
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerview.setLayoutManager(layoutManager);
@@ -106,7 +117,7 @@ public class CateShoujiFragment extends ScrollAbleFragment {
             @Override
             public void onItemClick(NewslistBean news, int position) {
                 e(TAG, "onItemClick" + "news:"+news.toString()+"position"+position);
-
+                //点击跳转到新闻详情
                 Intent intent = new Intent(getActivity(), NewsDetilActivity.class);
                 intent.putExtra("news", news);
                 startActivity(intent);

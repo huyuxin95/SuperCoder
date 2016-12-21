@@ -3,4 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="touch_raise">4dp</dimen>
+    <dimen name="dimen_s">4dp</dimen>
+    <dimen name="text_size18">18sp</dimen>
+    <dimen name="high_1px">1px</dimen>
 </resources>

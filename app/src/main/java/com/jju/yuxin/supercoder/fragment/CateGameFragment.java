@@ -29,7 +29,7 @@ import static android.util.Log.i;
  *=============================================================================
  *
  * Copyright (c) 2016  yuxin rights reserved.
- * ClassName TwoCateFragment
+ * ClassName CateGameFragment
  * Created by yuxin.
  * Created time 13-12-2016 10:11.
  * Describe : 第三层Viewpager,填充的可滚动的Fragment
@@ -52,7 +52,8 @@ public class CateGameFragment extends ScrollAbleFragment {
             switch (msg.what) {
                 case Constant.FINISHED:
                     List<NewslistBean> newslistBeen = (List<NewslistBean>) msg.obj;
-                    e(TAG, "handleMessage:" + "NewslistBean"+newslistBeen);
+
+                      //constant.getAdlist()初始的广告位置
                     gameAdapter.onReference(newslistBeen);
                     break;
                 case Constant.LOADMORE:
@@ -82,7 +83,14 @@ public class CateGameFragment extends ScrollAbleFragment {
         return fragment;
     }
 
-
+    /**
+     * 设置当前fragment的布局
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -94,6 +102,8 @@ public class CateGameFragment extends ScrollAbleFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         recyclerview = (YRecycleview) this.getView().findViewById(R.id.yrecycle_view);
+
+        //线性垂直布局
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerview.setLayoutManager(layoutManager);

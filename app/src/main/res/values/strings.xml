@@ -15,4 +15,9 @@
     <string name="bofangwancheng">播放完成</string>
     <string name="haoxiangchuxianleyidianwenti">好像出现了一点问题,待会再试吧.</string>
     <string name="bizhi">壁纸</string>
+    <string name="zaianyicituichu">再点一次退出</string>
+    <string name="no_network">当前无可用网络</string>
+    <string name="goto_net_setting">是否跳转到网络设置界面?</string>
+    <string name="queding">确定</string>
+    <string name="quxiao">取消</string>
 </resources>

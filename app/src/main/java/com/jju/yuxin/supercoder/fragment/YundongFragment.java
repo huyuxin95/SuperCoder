@@ -31,7 +31,7 @@ import static android.util.Log.i;
  * =============================================================================
  * <p>
  * Copyright (c) 2016  yuxin rights reserved.
- * ClassName OneFragment
+ * ClassName YundongFragment
  * Created by yuxin.
  * Created time 12-12-2016 14:11.
  * Describe :运动fragment
@@ -54,9 +54,8 @@ public class YundongFragment extends Fragment {
             //给适配器设置内容
             switch (msg.what) {
                 case Constant.FINISHED:
+                    //数据加载完成
                     List<NewslistBean> newslistBeen = (List<NewslistBean>) msg.obj;
-
-                    i(TAG, "HM" + "constant.getAdlist():"+constant.getTwoAdlist());
 
                     //constant.getAdlist()初始的广告位置
                     ydAdapter.onReference(newslistBeen,constant.getTwoAdlist());
@@ -68,7 +67,6 @@ public class YundongFragment extends Fragment {
 
                     int page = msg.arg1;
 
-                    i(TAG, "HM" + "page:"+page);
                     //初始化一个集合用来放置即将加入的广告位置
                     List<Integer> adlists=new ArrayList<>();
 

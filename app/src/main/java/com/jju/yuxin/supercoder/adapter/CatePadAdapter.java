@@ -23,10 +23,10 @@ import java.util.List;
  *=============================================================================
  *
  * Copyright (c) 2016  yuxin rights reserved.
- * ClassName TwoAdapter
+ * ClassName CatePadAdapter
  * Created by yuxin.
  * Created time 13-12-2016 15:13.
- * Describe :
+ * Describe : pad的适配器
  * History:
  * Version   1.0.
  *
@@ -45,6 +45,10 @@ public class CatePadAdapter extends RecyclerView.Adapter<CatePadAdapter.ViewHold
     }
 
 
+    /**
+     * 添加数据引用
+     * @param list
+     */
     public void onReference(List<NewslistBean> list) {
         if (list != null) {
             newslistBeen.clear();
@@ -53,6 +57,10 @@ public class CatePadAdapter extends RecyclerView.Adapter<CatePadAdapter.ViewHold
         }
     }
 
+    /**
+     * 追加数据
+     * @param list
+     */
     public void addOnReference(List<NewslistBean> list) {
         if (list != null) {
             newslistBeen.addAll(list);
@@ -63,6 +71,7 @@ public class CatePadAdapter extends RecyclerView.Adapter<CatePadAdapter.ViewHold
 
     @Override
     public CatePadAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+     //返回ViewHolder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_adapter_item_two, parent, false);
         CatePadAdapter.ViewHolder vh = new CatePadAdapter.ViewHolder(view);
         return vh;
@@ -70,15 +79,20 @@ public class CatePadAdapter extends RecyclerView.Adapter<CatePadAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(CatePadAdapter.ViewHolder holder, final int position) {
+     //图片加载失败
         if (Constant.FAILED_LOADING.equals(newslistBeen.get(position).getPicUrl())){
             holder.iv_adapter.setBackgroundResource(R.mipmap.failed_loading);
         }else{
             x.image().bind(holder.iv_adapter,newslistBeen.get(position).getPicUrl());
         }
+        //设置标题
         holder.tv_title.setText(newslistBeen.get(position).getTitle());
+        //设置时间
         holder.tv_time.setText(newslistBeen.get(position).getCtime());
 
+        //判断是否有调动监听
         if (mOnItemClickLitener != null) {
+            //点击事件监听
             holder.ry_cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,6 +108,9 @@ public class CatePadAdapter extends RecyclerView.Adapter<CatePadAdapter.ViewHold
         return newslistBeen.size();
     }
 
+    /**
+     * ViewHolder
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout ry_cardview;
         ImageView iv_adapter;

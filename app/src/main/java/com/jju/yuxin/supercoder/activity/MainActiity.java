@@ -26,27 +26,22 @@ import java.util.List;
  * Created by yuxin.
  * Created time 2016/12/8 0008 下午 4:06.
  * Version   1.0;
- * Describe :
+ * Describe : 包含所有activity的activity
  * History:
  * ==============================================================================
  */
 
 public class MainActiity extends Activity {
-    Context context = null;
-    LocalActivityManager manager = null;
-    ViewPager pager = null;
-
-    private int offset = 0;// 动画图片偏移量
-    private int currIndex = 0;// 当前页卡编号
+    private Context context = null; //上下文
+    private LocalActivityManager manager = null; //activity管理器
+    private ViewPager pager = null;
     private RadioGroup rg_bm_bar;
     private RadioButton rb_home;
     private RadioButton rb_video;
     private RadioButton rb_pic;
-    private RadioButton rb_mine;
     private static final int HomePager = 0;
     private static final int VedioPager = 1;
     private static final int PicPager = 2;
-    private static final int MinePager = 3;
 
 
     @Override
@@ -71,22 +66,21 @@ public class MainActiity extends Activity {
         rb_home = (RadioButton) findViewById(R.id.rb_home);
         rb_video = (RadioButton) findViewById(R.id.rb_video);
         rb_pic = (RadioButton) findViewById(R.id.rb_pic);
-        rb_mine = (RadioButton) findViewById(R.id.rb_mine);
 
+        //存放界面的三个activity的View
         final ArrayList<View> list = new ArrayList<View>();
 
         Intent intent = new Intent(context, HomeActivity.class);
         //将activity转换成view对象存放到List集合
-        list.add(getView("Home", intent));
+        list.add(getView("Home", intent));  //首页
         Intent intent2 = new Intent(context, VedioActivity.class);
-        list.add(getView("Vedio", intent2));
+        list.add(getView("Vedio", intent2));  //视频
         Intent intent3 = new Intent(context, PicActivity.class);
-        list.add(getView("Pic", intent3));
-        Intent intent4 = new Intent(context, MineActivity.class);
-        list.add(getView("Mine", intent4));
+        list.add(getView("Pic", intent3));   //图片
 
         //适配器
         pager.setAdapter(new MainPagerAdapter(list));
+        //设置初始加载的页面为0
         pager.setCurrentItem(0);
         pager.setOnPageChangeListener(new MyOnPageChangeListener());
 
@@ -109,10 +103,6 @@ public class MainActiity extends Activity {
                     case R.id.rb_pic:
                         //图片
                         pager.setCurrentItem(PicPager);
-                        break;
-                    case R.id.rb_mine:
-                        //我的
-                        pager.setCurrentItem(MinePager);
                         break;
                     default:
                         break;
@@ -141,10 +131,20 @@ public class MainActiity extends Activity {
     public class MainPagerAdapter extends PagerAdapter {
         List<View> list = new ArrayList<View>();
 
+        /**
+         * 构造器
+         * @param list
+         */
         public MainPagerAdapter(ArrayList<View> list) {
             this.list = list;
         }
 
+        /**
+         * 销毁item
+         * @param container
+         * @param position
+         * @param object
+         */
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             ViewPager pViewPager = ((ViewPager) container);
@@ -200,9 +200,6 @@ public class MainActiity extends Activity {
                     break;
                 case PicPager:
                     rb_pic.setChecked(true);
-                    break;
-                case MinePager:
-                    rb_mine.setChecked(true);
                     break;
             }
 

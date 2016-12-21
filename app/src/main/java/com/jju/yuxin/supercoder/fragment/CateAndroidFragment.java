@@ -23,14 +23,13 @@ import com.jju.yuxin.supercoder.view.YRecycleview;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.util.Log.e;
 import static android.util.Log.i;
 
 /**
  *=============================================================================
  *
  * Copyright (c) 2016  yuxin rights reserved.
- * ClassName TwoCateFragment
+ * ClassName CateAndroidFragment
  * Created by yuxin.
  * Created time 13-12-2016 10:11.
  * Describe : android 第三层Viewpager,填充的可滚动的Fragment
@@ -56,8 +55,6 @@ public class CateAndroidFragment extends ScrollAbleFragment {
                 case Constant.FINISHED:
                     //数据刷新完成
                     List<NewslistBean> newslistBeen = (List<NewslistBean>) msg.obj;
-
-                    i(TAG, "HM" + "constant.getAdlist():"+constant.getThridAdlist());
 
                     //constant.getAdlist()初始的广告位置
                     androidAdapter.onReference(newslistBeen,constant.getThridAdlist());
@@ -112,6 +109,7 @@ public class CateAndroidFragment extends ScrollAbleFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //当前fragment绑定的视图
         View view = inflater.inflate(R.layout.fragment_recycleview,container,false);
         return view;
     }
@@ -121,6 +119,7 @@ public class CateAndroidFragment extends ScrollAbleFragment {
         super.onActivityCreated(savedInstanceState);
         recyclerview = (YRecycleview) this.getView().findViewById(R.id.yrecycle_view);
 
+        //线性垂直布局
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerview.setLayoutManager(layoutManager);
@@ -134,7 +133,7 @@ public class CateAndroidFragment extends ScrollAbleFragment {
         androidAdapter.setOnItemClickLitener(new CateAndroidAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(NewslistBean news, int position) {
-                e(TAG, "onItemClick" + "news:"+news.toString()+"position"+position);
+                i(TAG, "onItemClick" + "news:"+news.toString()+"position"+position);
 
                 Intent intent = new Intent(getActivity(), NewsDetilActivity.class);
                 intent.putExtra("news", news);
@@ -152,7 +151,7 @@ public class CateAndroidFragment extends ScrollAbleFragment {
         recyclerview.setRefreshAndLoadMoreListener(new YRecycleview.OnRefreshAndLoadMoreListener() {
             @Override
             public void onRefresh() {
-                i(TAG, "onRefresh" + "下拉刷新");
+
                 //设置刷新完成
                 recyclerview.setReFreshComplete();
                 //获取默认参数设置
@@ -164,13 +163,13 @@ public class CateAndroidFragment extends ScrollAbleFragment {
 
             @Override
             public void onLoadMore() {
-                i(TAG, "onLoadMore" + "加载更多");
+
                 //加载更多
                 recyclerview.setloadMoreComplete();
 
                 int page= (androidAdapter.getItemCount())/Constant.DEFAULT_COUNT+1;
 
-                e(TAG, "onLoadMore" + "page:"+page);
+
                 //获取默认参数设置
                 GetParams params_map = new GetParams();
                 params_map.addToParams_map("word","Android");

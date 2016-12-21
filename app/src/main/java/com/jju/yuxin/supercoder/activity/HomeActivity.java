@@ -7,11 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.jju.yuxin.supercoder.R;
 import com.jju.yuxin.supercoder.adapter.FragmentViewPagerAdapter;
@@ -22,9 +24,10 @@ import com.jju.yuxin.supercoder.fragment.ZixunFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-
-
+import static android.util.Log.e;
 import static android.util.Log.i;
 
 /**
@@ -92,7 +95,6 @@ public class HomeActivity extends AppCompatActivity {
         //添加额外监听
         adapter.setOnExtraPageChangeListener(new FragmentViewPagerAdapter.OnExtraPageChangeListener() {
 
-
             @Override
             public void onExtraPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 i(TAG, "onExtraPageScrolled" + "...position--------: " + position+"positionOffset:"+positionOffset+"-------------positionOffsetPixels"+positionOffsetPixels);
@@ -155,9 +157,8 @@ public class HomeActivity extends AppCompatActivity {
      */
     private void InitImageView() {
         cursor = (ImageView) findViewById(R.id.cursor);
-
-        bitmap_width = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_pull).getWidth();// 获取图片宽度
-
+        // 获取图片宽度
+        bitmap_width = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_pull).getWidth();
         //获取手机屏幕分辨率
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -197,6 +198,47 @@ public class HomeActivity extends AppCompatActivity {
      }
  }
 
+    /**
+     * 返回键响应
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
+        //当按下返回键
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            //调用双击退出函数
+            exitBy2Click();
+            //当点击的是返回按键,那么返回true,拦截事件的传递
+            return true;
+        }
+        //拦截按键事件,
+        return false;
+    }
+    /**
+     * 双击退出函数
+     */
+    private static Boolean isExit = false;
 
+    /**
+     * 双击退出函数
+     */
+    private void exitBy2Click() {
+        Timer tExit = null;
+        if (isExit == false) {
+            isExit = true; // 准备退出
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            tExit = new Timer();
+            tExit.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit = false; // 取消退出
+                }
+            }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
+
+        } else {
+            finish();
+            System.exit(0);
+        }
+    }
 }

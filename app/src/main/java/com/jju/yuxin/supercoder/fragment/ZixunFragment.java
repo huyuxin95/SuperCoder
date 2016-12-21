@@ -30,7 +30,7 @@ import static android.util.Log.i;
  * =============================================================================
  * <p>
  * Copyright (c) 2016  yuxin rights reserved.
- * ClassName OneFragment
+ * ClassName ZixunFragment
  * Created by yuxin.
  * Created time 12-12-2016 14:11.
  * Describe :资讯fragment

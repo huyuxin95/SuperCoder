@@ -26,10 +26,10 @@ public class VedioInfoBean implements Parcelable {
 
     //进入详情页加载的信息
 
-    private String news_title;
-    private String push_date;
-    private String play_count;
-    private String play_src;
+    private String news_title;  //新闻标题
+    private String push_date;   //推送时间
+    private String play_count;  //播放总数
+    private String play_src;    //视频地址
 
 
 

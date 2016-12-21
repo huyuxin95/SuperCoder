@@ -15,7 +15,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,6 +50,19 @@ import static android.app.DownloadManager.Request.VISIBILITY_VISIBLE;
 import static android.util.Log.e;
 
 
+/**
+ *=============================================================================
+ *
+ * Copyright (c) 2016  yuxin rights reserved.
+ * ClassName VedioNewsDetailsActivity
+ * Created by yuxin.
+ * Created time 20-12-2016 23:31.
+ * Describe :视频详细内容页面
+ * History:
+ * Version   1.0.
+ *
+ *==============================================================================
+ */
 public class VedioNewsDetailsActivity extends AppCompatActivity {
 
     private static final String TAG = VedioNewsDetailsActivity.class.getSimpleName();
@@ -72,18 +84,16 @@ public class VedioNewsDetailsActivity extends AppCompatActivity {
                 case Constant.SUCCESS:
                     vedioinfos = (List<VedioInfoBean>) msg.obj;
 
-                    e(TAG, "!!!!!!!!handleMessage" + vedioinfos.toString());
                     //将内容填充到ListView
                     lv_more_vedio.setAdapter(new VedioList_Adapter(VedioNewsDetailsActivity.this, vedioinfos));
                     break;
                 //视频新闻加载成功
                 case Constant.SUCCESS_LOAD_DETAIL:
                     vedioInfoBean = (VedioInfoBean) msg.obj;
-                    e(TAG, "handleMessage" + "vedioInfoBean:" + vedioInfoBean.toString());
 
                     //设置新闻内容
                     reader_count.setText(vedioInfoBean.getPlay_count());
-
+                    //设置新闻标题
                     collapsing_toolbar.setTitle(vedioInfoBean.getNews_title());
 
                     playVedio(vedioInfoBean.getPlay_src());
@@ -118,8 +128,11 @@ public class VedioNewsDetailsActivity extends AppCompatActivity {
         e(TAG, "onCreate" + "");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vedio_news_details);
+        //分享点击监听
         SharedClickListener sharedClickListener = new SharedClickListener();
+
         downManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        //视频图片
         ivImage = (ImageView) findViewById(R.id.ivImage);
         //标题
         collapsing_toolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -142,12 +155,13 @@ public class VedioNewsDetailsActivity extends AppCompatActivity {
 
         nestedScrollView = (NestedScrollView) findViewById(R.id.nestscrollview);
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // 给左上角图标的左边加上一个返回的图标
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //注册一个广播用来接收播放位置
+        //动态注册一个广播用来接收播放位置
         positionBroadcast = new getPositionBroadcast();
         IntentFilter filter = new IntentFilter();
         filter.addAction("sendposition");
@@ -162,9 +176,10 @@ public class VedioNewsDetailsActivity extends AppCompatActivity {
             }
         });
 
+        //加载视频
         JsoupUtils.getNewPaper(path, mhandler);
 
-        //视频列表点击事件
+        //<更多视频>列表点击事件
         lv_more_vedio.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -174,18 +189,21 @@ public class VedioNewsDetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(VedioNewsDetailsActivity.this, VedioNewsDetailsActivity.class);
                 intent.putExtra("vedio_news", vedioInfoBean);
                 startActivity(intent);
+                //关闭当前页面
                 finish();
             }
         });
 
-        //通过 NavigationDrawer 打开关闭 抽屉---返回
+        //设置返回监听--返回
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();//返回上一级
+                //返回上一级
+                onBackPressed();
             }
         });
 
+        //当页面发生滚动,将正在现实的播放器的控制器隐藏
         nestedScrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -208,7 +226,7 @@ public class VedioNewsDetailsActivity extends AppCompatActivity {
     }
 
     /**
-     * onResume中放置从onpause跳转
+     * onResume中防止从onpause跳转
      */
     @Override
     protected void onResume() {
@@ -250,7 +268,7 @@ public class VedioNewsDetailsActivity extends AppCompatActivity {
         //传过来的视频新闻对象
         vedioInfoBean = getIntent().getParcelableExtra("vedio_news");
         x.image().bind(ivImage, vedioInfoBean.getImg_src());
-        e(TAG, "getInfo" + vedioInfoBean.toString());
+
     }
 
     /**
@@ -453,12 +471,14 @@ public class VedioNewsDetailsActivity extends AppCompatActivity {
             e(TAG, "downloadVedio" + file.getAbsolutePath() + file.exists());
             if (!file.exists()) {
                 Toast.makeText(VedioNewsDetailsActivity.this, "开始下载", Toast.LENGTH_SHORT).show();
+                //创建一个下载管理器的请求
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(play_info.getPlay_src()));
                 request.setNotificationVisibility(VISIBILITY_VISIBLE);//用于设置下载时时候在状态栏显示通知信
                 request.allowScanningByMediaScanner();//用于设置是否允许本MediaScanner扫描。
                 request.setTitle("下载中");
                 request.setDescription("视频正在下载中");
                 request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, play_info.getNews_title().replace(" ", "") + ".mp4");
+                //加入下载队列
                 long enqueue = downManager.enqueue(request);
             } else {
                 Toast.makeText(this, "您已经下载过了这个视频...", Toast.LENGTH_SHORT).show();
@@ -475,12 +495,16 @@ public class VedioNewsDetailsActivity extends AppCompatActivity {
      * @return
      */
     private MediaController getMediaController(Context context) {
+        //单例
         if (mediaController == null) {
             mediaController = new MediaController(context);
         }
         return mediaController;
     }
 
+    /**
+     * 获取播放进度,广播接受者
+     */
     public class getPositionBroadcast extends BroadcastReceiver {
 
         @Override
@@ -488,9 +512,11 @@ public class VedioNewsDetailsActivity extends AppCompatActivity {
 
             int position = intent.getIntExtra("position", 0);
             e(TAG, "onReceive" + "position" + position);
+            //调到指定位置
             vedio_paly.seekTo(position);
             if (position == 0) {
                 per_position = 0;
+                //播放完成
                 vedio_paly.seekTo(vedio_paly.getDuration() - 1);
             } else {
                 vedio_paly.start();

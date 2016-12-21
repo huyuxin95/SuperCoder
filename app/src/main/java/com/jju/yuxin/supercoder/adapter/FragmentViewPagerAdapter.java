@@ -18,7 +18,7 @@ import java.util.List;
  * Created by yuxin.
  * Created time 12-12-2016 10:56.
  * Describe :为第二层ViewPager添加fragment
- * 绑定和处理fragments和viewpager之间的逻辑关系
+ *              绑定和处理fragments和viewpager之间的逻辑关系
  * History:
  * Version   1.0.
  * <p>
@@ -110,9 +110,11 @@ public class FragmentViewPagerAdapter extends PagerAdapter implements ViewPager.
 
     @Override
     public void onPageSelected(int position) {
-        fragments.get(currentPageIndex).onPause(); // 调用切换前Fargment的onPause()
+        // 调用切换前Fargment的onPause()
+        fragments.get(currentPageIndex).onPause();
         if (fragments.get(position).isAdded()) {
-            fragments.get(position).onResume(); // 调用切换后Fargment的onResume()
+            // 调用切换后Fargment的onResume()
+            fragments.get(position).onResume();
         }
         currentPageIndex = position;
         //判断是否设置接口回调

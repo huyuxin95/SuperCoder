@@ -31,7 +31,7 @@ import static android.util.Log.i;
  *=============================================================================
  *
  * Copyright (c) 2016  yuxin rights reserved.
- * ClassName OneFragment
+ * ClassName ChuangyeFragment
  * Created by yuxin.
  * Created time 12-12-2016 14:11.
  * Describe :创业fragment
@@ -123,7 +123,7 @@ public class ChuangyeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         //获取到带下拉刷新和上拉加载的recycleview
         recyclerview = (YRecycleview) this.getView().findViewById(R.id.yrecycle_view);
-        
+        //设置当前Recycle的样式为线性垂直
         LinearLayoutManager ll_manager = new LinearLayoutManager(getActivity());
         ll_manager.setOrientation(LinearLayoutManager.VERTICAL);
         //设置RecycleView的方向为垂直方向

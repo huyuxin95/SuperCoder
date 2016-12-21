@@ -24,7 +24,7 @@ import java.util.List;
  * Created time 2016/11/12 0012 下午 10:44.
  * Version   1.0;
  * Describe :Listview的适配器,这是一个listview的model,
- * 对于每一个模块应该有自己的adapter,在子ListView应该编写自己的ViewHolder
+ *          对于每一个模块应该有自己的adapter,在子ListView应该编写自己的ViewHolder
  * History:
  * ==============================================================================
  */

@@ -17,15 +17,17 @@ import com.jju.yuxin.supercoder.R;
 import static android.util.Log.e;
 
 /**
- * =============================================================================
- * Copyright (c) 2016 yuxin All rights reserved.
- * Packname com.jju.yuxin.cinews.activity
+ *=============================================================================
+ *
+ * Copyright (c) 2016  yuxin rights reserved.
+ * ClassName LandScapeVedio
  * Created by yuxin.
- * Created time 2016/11/23 0023 上午 8:42.
- * Version   1.0;
+ * Created time 20-12-2016 22:06.
  * Describe :视屏全屏播放界面
  * History:
- * ==============================================================================
+ * Version   1.0.
+ *
+ *==============================================================================
  */
 
 public class LandScapeVedio extends Activity {
@@ -41,7 +43,7 @@ public class LandScapeVedio extends Activity {
         setContentView(R.layout.activity_landscape);
         full_vedioview = (VideoView) findViewById(R.id.full_vedioview);
 
-        //重新绘制VideoView,达到全屏的目的
+        //重新绘制VideoView距上下左右的距离,达到全屏的目的
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.FILL_PARENT,
                 RelativeLayout.LayoutParams.FILL_PARENT);
@@ -61,7 +63,7 @@ public class LandScapeVedio extends Activity {
         int currentPosition = intent.getIntExtra("currentPosition", 0);
 
        // e(TAG, "onCreate" + "currentPosition:"+currentPosition);
-
+        //获取播放视频
         String play_src = intent.getStringExtra("play_src");
         playVedio(play_src, currentPosition);
     }
@@ -85,6 +87,7 @@ public class LandScapeVedio extends Activity {
             public boolean onError(MediaPlayer mp, int what, int extra) {
 
                 Toast.makeText(LandScapeVedio.this, R.string.haoxiangchuxianleyidianwenti, Toast.LENGTH_SHORT).show();
+                //跳转到第一帧,并暂停
                 full_vedioview.seekTo(0);
                 full_vedioview.pause();
                 return true;
@@ -114,6 +117,7 @@ public class LandScapeVedio extends Activity {
         @Override
         public void onCompletion(MediaPlayer mp) {
             Toast.makeText(LandScapeVedio.this, R.string.bofangwancheng, Toast.LENGTH_SHORT).show();
+            //播放完成,发送广播
             Intent intent=new Intent();
             intent.setAction("sendposition");
             e(TAG, "onCompletion" + 0);
@@ -152,7 +156,7 @@ public class LandScapeVedio extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        //销毁,发送播放进度的广播
         Intent intent=new Intent();
         intent.setAction("sendposition");
         e(TAG, "onDestroy" + per_position);

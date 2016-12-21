@@ -32,10 +32,10 @@ import static android.util.Log.i;
  *=============================================================================
  *
  * Copyright (c) 2016  yuxin rights reserved.
- * ClassName TwoAdapter
+ * ClassName CatePicAdapter
  * Created by yuxin.
  * Created time 13-12-2016 15:13.
- * Describe :
+ * Describe :壁纸的适配器
  * History:
  * Version   1.0.
  *
@@ -238,7 +238,7 @@ public class CatePicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private OnItemClickLitener mOnItemClickLitener;
 
     public interface OnItemClickLitener {
-        void onItemClick(ResponseBean news, int position);
+        void onItemClick(ResponseBean responseBean, int position);
     }
 
     public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {

@@ -30,7 +30,7 @@ import static android.util.Log.i;
  *=============================================================================
  *
  * Copyright (c) 2016  yuxin rights reserved.
- * ClassName TwoCateFragment
+ * ClassName CateWinFragment
  * Created by yuxin.
  * Created time 13-12-2016 10:11.
  * Describe : 第三层Viewpager,填充的可滚动的Fragment
@@ -57,8 +57,6 @@ public class CateWinFragment extends ScrollAbleFragment {
                 case Constant.FINISHED:
                     //数据刷新完成
                     List<NewslistBean> newslistBeen = (List<NewslistBean>) msg.obj;
-
-                    i(TAG, "HM" + "constant.getAdlist():"+constant.getThridAdlist());
 
                     //constant.getAdlist()初始的广告位置
                     winAdapter.onReference(newslistBeen,constant.getThridAdlist());
@@ -113,10 +111,7 @@ public class CateWinFragment extends ScrollAbleFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         recyclerview = (YRecycleview) this.getView().findViewById(R.id.yrecycle_view);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-
+        //设置为瀑布流布局
         recyclerview.setLayoutManager(new StaggeredGridLayoutManager(3,
                 StaggeredGridLayoutManager.VERTICAL));
         recyclerview.setItemAnimator(new DefaultItemAnimator());

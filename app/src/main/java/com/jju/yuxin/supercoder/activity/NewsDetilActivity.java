@@ -18,15 +18,28 @@ import com.jju.yuxin.supercoder.bean.NewslistBean;
 
 import org.xutils.x;
 
-
+/**
+ *=============================================================================
+ *
+ * Copyright (c) 2016  yuxin rights reserved.
+ * ClassName NewsDetilActivity
+ * Created by yuxin.
+ * Created time 20-12-2016 22:17.
+ * Describe :新闻详情页
+ * History:
+ * Version   1.0.
+ *
+ *==============================================================================
+ */
 public class NewsDetilActivity extends AppCompatActivity {
 
     private ImageView ivImage;
-    // private Toolbar toolbar;
+    // ToolbarLayout用来放置简介图片和标题
     private CollapsingToolbarLayout collapsing_toolbar;
     private ProgressBar progress;
     private WebView htNewsContent;
     private NewslistBean newsBean;
+    private Toolbar toolbar;
 
     // private Toolbar toolbar;
     // 定义一个变量，来标识是否退出
@@ -41,18 +54,23 @@ public class NewsDetilActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * 视图的初始化
+     */
     protected void init() {
         ivImage = (ImageView) findViewById(R.id.ivImage);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         collapsing_toolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         progress = (ProgressBar) findViewById(R.id.progress);
         htNewsContent = (WebView) findViewById(R.id.htNewsContent);
 
+        //当build版本大于21
         if (Build.VERSION.SDK_INT >= 21) {
             View decorView = getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
+            //设置状态栏透明
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
 
@@ -60,28 +78,37 @@ public class NewsDetilActivity extends AppCompatActivity {
         // 给左上角图标的左边加上一个返回的图标
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //通过 NavigationDrawer 打开关闭 抽屉---返回
+        //---返回.finish当前activity
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();//返回上一级
+                //返回上一级
+                onBackPressed();
             }
         });
 
 
     }
 
+    /**
+     * 数据的初始化
+     */
     protected void initdata() {
-        hideprogress();
+        //获取传送过来的对象
         newsBean = (NewslistBean) getIntent().getParcelableExtra("news");
-        collapsing_toolbar.setTitle(newsBean.getTitle());
-        x.image().bind((ImageView) findViewById(R.id.ivImage), newsBean.getPicUrl());
-       // htNewsContent.setHtmlFromString(newsBean.getUrl(), new HtmlTextView.LocalImageGetter());
-        htNewsContent.loadUrl(newsBean.getUrl());
 
+        //设置文章标题
+        collapsing_toolbar.setTitle(newsBean.getTitle());
+
+        //绑定简介图片
+        x.image().bind((ImageView) findViewById(R.id.ivImage), newsBean.getPicUrl());
+
+        //设置webview的url
+        htNewsContent.loadUrl(newsBean.getUrl());
         htNewsContent.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
                 view.loadUrl(url);
                 return true;
             }
@@ -93,13 +120,7 @@ public class NewsDetilActivity extends AppCompatActivity {
         settings.setUseWideViewPort(true);
     }
 
-    public void hideprogress() {
-        progress.setVisibility(View.GONE);
-    }
 
-    public void showProgress() {
-        progress.setVisibility(View.VISIBLE);
-    }
 
 
 

@@ -9,10 +9,11 @@ import java.util.List;
  * Created by yuxin.
  * Created time 2016/12/19 0019 下午 9:03.
  * Version   1.0;
- * Describe :
+ * Describe : 图片信息Bean
  * History:
  * ==============================================================================
  */
+
 
 public class PicInfoBean {
 

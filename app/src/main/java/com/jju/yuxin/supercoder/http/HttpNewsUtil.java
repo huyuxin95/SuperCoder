@@ -24,7 +24,7 @@ import static android.util.Log.e;
  * Created by yuxin.
  * Created time 2016/12/14 0014 下午 3:20.
  * Version   1.0;
- * Describe : Http网络请求
+ * Describe : 获取新闻的Htpp工具类
  * History:
  * ==============================================================================
  */
@@ -35,6 +35,7 @@ public class HttpNewsUtil {
 
     /**
      * Http网络请求,第一次加载或者刷新数据
+     *
      * @param url
      * @param channel
      * @param paramsMap
@@ -84,6 +85,7 @@ public class HttpNewsUtil {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                //加载失败
                 hasError = true;
 
                 if (ex instanceof HttpException) { // 网络错误
@@ -108,14 +110,15 @@ public class HttpNewsUtil {
 
             @Override
             public void onFinished() {
+                //加载完成
                 if (!hasError && result != null) {
                     // 成功获取数据
                     e(TAG, "onFinished" + "result:" + result);
                     List<NewslistBean> newslistBeen = JsonParserUtils.parserResulet(result);
-                    Log.e(TAG, "onFinished!!!s" + newslistBeen.toString());
-                    Message msg=Message.obtain();
-                    msg.what= Constant.FINISHED;
-                    msg.obj=newslistBeen;
+                    //将加载完成的数据通过handler发送出去
+                    Message msg = Message.obtain();
+                    msg.what = Constant.FINISHED;
+                    msg.obj = newslistBeen;
                     mhandler.sendMessage(msg);
                 }
             }
@@ -126,6 +129,7 @@ public class HttpNewsUtil {
      * Http网络请求,加载
      * isFirst应当为 false
      * paramsMap里面应当有page的key,指定加载下一页
+     *
      * @param url
      * @param channel
      * @param paramsMap
@@ -202,12 +206,13 @@ public class HttpNewsUtil {
             public void onFinished() {
                 if (!hasError && result != null) {
                     // 成功获取数据
-                    e(TAG, "onFinished" + "result:" + result);
+
                     List<NewslistBean> newslistBeen = JsonParserUtils.parserResulet(result);
-                    Message msg=Message.obtain();
-                    msg.what= Constant.LOADMORE;
-                    msg.obj=newslistBeen;
-                    msg.arg1=page;
+                    // 成功获取数据
+                    Message msg = Message.obtain();
+                    msg.what = Constant.LOADMORE;
+                    msg.obj = newslistBeen;
+                    msg.arg1 = page;
                     mhandler.sendMessage(msg);
                 }
             }

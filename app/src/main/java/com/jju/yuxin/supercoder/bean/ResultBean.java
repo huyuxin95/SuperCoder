@@ -9,7 +9,7 @@ import java.util.List;
  * Created by yuxin.
  * Created time 2016/12/14 0014 下午 4:21.
  * Version   1.0;
- * Describe : 返回结果的Bean类
+ * Describe : 新闻请求 返回结果的Bean类
  * History:
  * ==============================================================================
  */

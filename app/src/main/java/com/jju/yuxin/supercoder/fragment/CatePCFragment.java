@@ -28,7 +28,7 @@ import static android.util.Log.i;
  *=============================================================================
  *
  * Copyright (c) 2016  yuxin rights reserved.
- * ClassName TwoCateFragment
+ * ClassName CatePCFragment
  * Created by yuxin.
  * Created time 13-12-2016 10:11.
  * Describe : 第三层Viewpager,填充的可滚动的Fragment
@@ -50,6 +50,7 @@ public class CatePCFragment extends ScrollAbleFragment {
             //给适配器设置内容
             switch (msg.what) {
                 case Constant.FINISHED:
+                    //数据请求完成
                     List<NewslistBean> newslistBeen = (List<NewslistBean>) msg.obj;
                     e(TAG, "handleMessage:" + "NewslistBean"+newslistBeen);
                     pcAdapter.onReference(newslistBeen);
@@ -81,6 +82,14 @@ public class CatePCFragment extends ScrollAbleFragment {
     }
 
 
+    /**
+     * 设置当前fragment的布局
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -92,6 +101,8 @@ public class CatePCFragment extends ScrollAbleFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         recyclerview = (YRecycleview) this.getView().findViewById(R.id.yrecycle_view);
+
+        //设置当前Recycle的样式为线性垂直
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerview.setLayoutManager(layoutManager);
@@ -99,6 +110,7 @@ public class CatePCFragment extends ScrollAbleFragment {
         pcAdapter = new CatePCAdapter(getActivity());
         recyclerview.setAdapter(pcAdapter);
 
+        //item点击事件
         pcAdapter.setOnItemClickLitener(new CatePCAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(NewslistBean news, int position) {

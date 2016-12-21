@@ -24,10 +24,10 @@ import java.util.List;
  *=============================================================================
  *
  * Copyright (c) 2016  yuxin rights reserved.
- * ClassName TwoAdapter
+ * ClassName VedioAdapter
  * Created by yuxin.
  * Created time 13-12-2016 15:13.
- * Describe :
+ * Describe : 视频适配器
  * History:
  * Version   1.0.
  *
@@ -46,6 +46,10 @@ public class VedioAdapter extends RecyclerView.Adapter<VedioAdapter.ViewHolder> 
     }
 
 
+    /**
+     * 添加数据引用
+     * @param list
+     */
     public void onReference(List<VedioInfoBean> list) {
         if (list != null) {
             vedioinfos.clear();
@@ -54,6 +58,10 @@ public class VedioAdapter extends RecyclerView.Adapter<VedioAdapter.ViewHolder> 
         }
     }
 
+  /**
+     * 追加数据
+     * @param list
+     */
     public void addOnReference(List<VedioInfoBean> list) {
         if (list != null) {
             vedioinfos.addAll(list);
@@ -64,6 +72,7 @@ public class VedioAdapter extends RecyclerView.Adapter<VedioAdapter.ViewHolder> 
 
     @Override
     public VedioAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+     //返回ViewHolder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_vedio_item, parent, false);
         VedioAdapter.ViewHolder vh = new VedioAdapter.ViewHolder(view);
         return vh;
@@ -71,17 +80,20 @@ public class VedioAdapter extends RecyclerView.Adapter<VedioAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(VedioAdapter.ViewHolder holder, final int position) {
-        
+           //图片加载失败
         if (Constant.FAILED_LOADING.equals(vedioinfos.get(position).getImg_src())){
             holder.iv_vedio_pic.setBackgroundResource(R.mipmap.failed_loading);
         }else{
+         //正常加载图片
             x.image().bind(holder.iv_vedio_pic,vedioinfos.get(position).getImg_src());
         }
-
+        //设置标题
         holder.tv_vedio_title.setText(vedioinfos.get(position).getNews_info());
+          //设置时间
         holder.tv_vedio_date.setText(vedioinfos.get(position).getNews_date());
 
         if (mOnItemClickLitener != null) {
+         //点击事件监听
             holder.ll_vedio_item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -97,6 +109,9 @@ public class VedioAdapter extends RecyclerView.Adapter<VedioAdapter.ViewHolder> 
         return vedioinfos.size();
     }
 
+/**
+     * ViewHolder
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout ll_vedio_item;
         ImageView iv_vedio_pic;
